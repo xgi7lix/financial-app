@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>notepad</title>
+</head>
+<style type="text/css">
+ol,ul{
+display:block;
+list-style-type:none;
+margin:3px;
+}
+</style><body>
+<div>&lt;!doctype html&gt;<br>
+&lt;html lang="ar" dir="rtl"&gt;<br>
+&lt;head&gt;<br>
+&nbsp; &lt;meta charset="utf-8" /&gt;<br>
+&nbsp; &lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;<br>
+&nbsp; &lt;title&gt;&#1575;&#1604;&#1605;&#1583;&#1610;&#1585; &#1575;&#1604;&#1605;&#1575;&#1604;&#1610;&lt;/title&gt;<br>
+&nbsp; &lt;style&gt;<br>
+&nbsp;&nbsp;&nbsp; /* --- &#1606;&#1605;&#1591; &#1593;&#1575;&#1605; &#1576;&#1587;&#1610;&#1591; &#1608;&#1571;&#1606;&#1610;&#1602; (&#1571;&#1576;&#1610;&#1590;/&#1571;&#1587;&#1608;&#1583;/&#1585;&#1605;&#1575;&#1583;&#1610;/&#1571;&#1586;&#1585;&#1602;) --- */<br>
+&nbsp;&nbsp;&nbsp; :root{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --bg:#f5f6f7;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --card:#ffffff;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --muted:#6b6b6b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --accent:#1e6fb8; /* &#1571;&#1586;&#1585;&#1602; */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --dark:#0b0b0b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --shadow: 0 10px 25px rgba(11,11,11,0.08);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --glass: rgba(255,255,255,0.8);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; font-family: "Segoe UI", Tahoma, sans-serif;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; html,body{height:100%;margin:0;background:linear-gradient(180deg,#f7f8f9,#eef1f4);color:var(--dark)}<br>
+&nbsp;&nbsp;&nbsp; .app{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; max-width:1100px;margin:30px auto;padding:20px;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; header{display:flex;justify-content:space-between;align-items:center;padding:10px 0}<br>
+&nbsp;&nbsp;&nbsp; h1{margin:0;font-size:20px}<br>
+&nbsp;&nbsp;&nbsp; .user-info{display:flex;gap:10px;align-items:center}<br>
+&nbsp;&nbsp;&nbsp; button.btn{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background:var(--accent);color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;box-shadow:var(--shadow);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; button.ghost{background:transparent;border:1px solid #ddd;color:var(--dark);padding:7px 10px;border-radius:8px;cursor:pointer}<br>
+<br>
+&nbsp;&nbsp;&nbsp; /* --- &#1605;&#1608;&#1583;&#1575;&#1604; &#1578;&#1587;&#1580;&#1610;&#1604; &#1575;&#1604;&#1583;&#1582;&#1608;&#1604; --- */<br>
+&nbsp;&nbsp;&nbsp; .modal-backdrop{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position:fixed;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;z-index:9999;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .modal{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width:420px;background:var(--card);border-radius:12px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,0.12);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display:flex;flex-direction:column;gap:14px;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .modal .brand{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display:flex;align-items:center;gap:14px;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .logo{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#4aa3ff);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; box-shadow:0 6px 20px rgba(30,111,184,0.25);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .modal h2{margin:0;font-size:18px}<br>
+&nbsp;&nbsp;&nbsp; .modal p{margin:0;color:var(--muted);font-size:13px}<br>
+&nbsp;&nbsp;&nbsp; .inputs{display:flex;flex-direction:column;gap:10px}<br>
+&nbsp;&nbsp;&nbsp; .inputs input{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; padding:10px;border-radius:10px;border:1px solid #e6e6e6;background:linear-gradient(180deg,#fff,#fafafa);outline:none;font-size:14px;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .row{display:flex;gap:8px}<br>
+&nbsp;&nbsp;&nbsp; .small{font-size:13px;color:var(--muted)}<br>
+&nbsp;&nbsp;&nbsp; .or {text-align:center;color:var(--muted);font-size:13px;margin-top:6px}<br>
+&nbsp;&nbsp;&nbsp; .google-btn{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; display:flex;align-items:center;gap:10px;justify-content:center;padding:10px;border-radius:10px;border:1px solid #e2e2e2;background:white;cursor:pointer;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; .hidden{display:none}<br>
+&nbsp;&nbsp;&nbsp; /* &#1605;&#1606;&#1593; &#1575;&#1604;&#1578;&#1601;&#1575;&#1593;&#1604; &#1576;&#1575;&#1604;&#1582;&#1604;&#1601;&#1610;&#1577; */<br>
+&nbsp;&nbsp;&nbsp; body.modal-active {overflow:hidden}<br>
+<br>
+&nbsp;&nbsp;&nbsp; /* --- &#1576;&#1593;&#1590; &#1571;&#1606;&#1605;&#1575;&#1591; &#1575;&#1604;&#1608;&#1575;&#1580;&#1607;&#1577; &#1576;&#1593;&#1583; &#1578;&#1587;&#1580;&#1610;&#1604; &#1575;&#1604;&#1583;&#1582;&#1608;&#1604; --- */<br>
+&nbsp;&nbsp;&nbsp; .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow)}<br>
+&nbsp;&nbsp;&nbsp; .balances{display:flex;gap:12px;flex-wrap:wrap}<br>
+&nbsp;&nbsp;&nbsp; .balance-item{min-width:160px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfbfb);border:1px solid #f0f0f0}<br>
+&nbsp;&nbsp;&nbsp; .transactions{margin-top:16px}<br>
+&nbsp;&nbsp;&nbsp; table{width:100%;border-collapse:collapse}<br>
+&nbsp;&nbsp;&nbsp; th,td{padding:9px;text-align:right;border-bottom:1px solid #f1f1f1}<br>
+&nbsp;&nbsp;&nbsp; .muted{color:var(--muted)}<br>
+&nbsp; &lt;/style&gt;<br>
+&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&nbsp; &lt;div class="app"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;header&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h1&gt;&#1575;&#1604;&#1605;&#1583;&#1610;&#1585; &#1575;&#1604;&#1605;&#1575;&#1604;&#1610;&lt;/h1&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="user-info"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div id="welcome" class="muted"&gt;&#1594;&#1610;&#1585; &#1605;&#1578;&#1589;&#1604;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="btn hidden" id="signOutBtn"&gt;&#1582;&#1585;&#1608;&#1580;&lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/header&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp; &lt;!-- &#1605;&#1581;&#1578;&#1608;&#1609; &#1608;&#1607;&#1605;&#1610; &#1604;&#1604;&#1578;&#1580;&#1585;&#1576;&#1577; --&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;section class="card"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h3&gt;&#1575;&#1604;&#1585;&#1589;&#1610;&#1583; &#1575;&#1604;&#1573;&#1580;&#1605;&#1575;&#1604;&#1610;&lt;/h3&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="balances" id="balancesContainer"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- &#1593;&#1606;&#1575;&#1589;&#1585; &#1575;&#1604;&#1571;&#1585;&#1589;&#1583;&#1577; &#1578;&#1592;&#1607;&#1585; &#1607;&#1606;&#1575; --&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="transactions card" style="margin-top:14px;"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h4&gt;&#1575;&#1604;&#1605;&#1593;&#1575;&#1605;&#1604;&#1575;&#1578; &#1575;&#1604;&#1571;&#1582;&#1610;&#1585;&#1577;&lt;/h4&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div id="txContainer" class="muted"&gt;&#1604;&#1575; &#1578;&#1608;&#1580;&#1583; &#1605;&#1593;&#1575;&#1605;&#1604;&#1575;&#1578; &#1576;&#1593;&#1583;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/section&gt;<br>
+&nbsp; &lt;/div&gt;<br>
+<br>
+&nbsp; &lt;!-- &#1605;&#1608;&#1583;&#1575;&#1604; &#1578;&#1587;&#1580;&#1610;&#1604; &#1575;&#1604;&#1583;&#1582;&#1608;&#1604; &#1575;&#1604;&#1575;&#1581;&#1578;&#1585;&#1575;&#1601;&#1610; --&gt;<br>
+&nbsp; &lt;div id="authModal" class="modal-backdrop"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;div class="modal" role="dialog" aria-modal="true"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="brand"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="logo"&gt;&#1605;&#1583;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h2&gt;&#1575;&#1604;&#1605;&#1583;&#1610;&#1585; &#1575;&#1604;&#1605;&#1575;&#1604;&#1610;&lt;/h2&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;&#1605;&#1585;&#1581;&#1576;&#1575;&#1611; &#1576;&#1603; &#1601;&#1610; &#1575;&#1604;&#1605;&#1583;&#1610;&#1585; &#1575;&#1604;&#1605;&#1575;&#1604;&#1610; &#8212; &#1602;&#1605; &#1576;&#1578;&#1587;&#1580;&#1610;&#1604; &#1575;&#1604;&#1583;&#1582;&#1608;&#1604; &#1604;&#1604;&#1605;&#1578;&#1575;&#1576;&#1593;&#1577;&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="inputs"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;input id="emailInput" type="email" placeholder="&#1575;&#1604;&#1576;&#1585;&#1610;&#1583; &#1575;&#1604;&#1573;&#1604;&#1603;&#1578;&#1585;&#1608;&#1606;&#1610;" autocomplete="username" /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;input id="passInput" type="password" placeholder="&#1603;&#1604;&#1605;&#1577; &#1575;&#1604;&#1605;&#1585;&#1608;&#1585;" autocomplete="current-password" /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="row"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="btn" id="signInBtn"&gt;&#1583;&#1582;&#1608;&#1604;&lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;button class="ghost" id="signUpBtn"&gt;&#1578;&#1587;&#1580;&#1610;&#1604; &#1580;&#1583;&#1610;&#1583;&lt;/button&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="or"&gt;&#1571;&#1608;&lt;/div&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="google-btn" id="googleSignInBtn"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;svg width="18" height="18" viewBox="0 0 533.5 544.3"&gt;&lt;path fill="#4285f4" d="M533.5 278.4c0-17.4-1.5-34.1-4.3-50.4H272v95.2h146.9c-6.3 34.6-25.9 64-55.4 83.7v69.5h89.5c52.6-48.4 82.5-119.8 82.5-198z"/&gt;&lt;path fill="#34a853" d="M272 544.3c73.8 0 135.7-24.4 180.9-66.4l-89.5-69.5c-24.9 16.7-56.9 26.6-91.3 26.6-70.1 0-129.6-47.3-150.9-111.3H31.8v69.8C77 478 167.3 544.3 272 544.3z"/&gt;&lt;path fill="#fbbc04" d="M121.1 330.7c-9.6-28.4-9.6-59.6 0-88L31.8 172.9C-6.9 238.7-6.9 316.6 31.8 382.4l89.3-51.7z"/&gt;&lt;path fill="#ea4335" d="M272 107.7c37.8 0 72 13 98.9 38.4l74.1-74.1C413.8 24.4 351.9 0 272 0 167.3 0 77 66.3 31.8 167.7l89.3 69.8C142.4 155 201.9 107.7 272 107.7z"/&gt;&lt;/svg&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;span&gt;&#1575;&#1604;&#1583;&#1582;&#1608;&#1604; &#1593;&#1576;&#1585; Google&lt;/span&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div class="small muted" id="authMsg" style="text-align:center"&gt;&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/div&gt;<br>
+&nbsp; &lt;/div&gt;<br>
+<br>
+&nbsp; &lt;!-- Firebase (compat) SDKs --&gt;<br>
+&nbsp; &lt;script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"&gt;&lt;/script&gt;<br>
+&nbsp; &lt;script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"&gt;&lt;/script&gt;<br>
+&nbsp; &lt;script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"&gt;&lt;/script&gt;<br>
+<br>
+&nbsp; &lt;script&gt;<br>
+&nbsp;&nbsp;&nbsp; /***** &#1590;&#1593; &#1607;&#1606;&#1575; firebaseConfig &#1603;&#1605;&#1575; &#1571;&#1585;&#1587;&#1604;&#1578;&#1607;&#1575; &#1605;&#1587;&#1576;&#1602;&#1611;&#1575; *****/<br>
+&nbsp;&nbsp;&nbsp; const firebaseConfig = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; apiKey: "AIzaSyDLgv4ruPM7rmodEa_q4QoI7Cn_p84Sqww",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; authDomain: "galmok-9d8e7.firebaseapp.com",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; projectId: "galmok-9d8e7",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; storageBucket: "galmok-9d8e7.firebasestorage.app",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; messagingSenderId: "193906028682",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; appId: "1:193906028682:web:00dd06fd80d556294b7d73",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; measurementId: "G-2XFFDDFEDD"<br>
+&nbsp;&nbsp;&nbsp; };<br>
+<br>
+&nbsp;&nbsp;&nbsp; // Initialize Firebase (compat)<br>
+&nbsp;&nbsp;&nbsp; firebase.initializeApp(firebaseConfig);<br>
+&nbsp;&nbsp;&nbsp; const auth = firebase.auth();<br>
+&nbsp;&nbsp;&nbsp; const db = firebase.firestore();<br>
+<br>
+&nbsp;&nbsp;&nbsp; // DOM &#1593;&#1606;&#1575;&#1589;&#1585;<br>
+&nbsp;&nbsp;&nbsp; const authModal = document.getElementById('authModal');<br>
+&nbsp;&nbsp;&nbsp; const emailInput = document.getElementById('emailInput');<br>
+&nbsp;&nbsp;&nbsp; const passInput = document.getElementById('passInput');<br>
+&nbsp;&nbsp;&nbsp; const signInBtn = document.getElementById('signInBtn');<br>
+&nbsp;&nbsp;&nbsp; const signUpBtn = document.getElementById('signUpBtn');<br>
+&nbsp;&nbsp;&nbsp; const googleBtn = document.getElementById('googleSignInBtn');<br>
+&nbsp;&nbsp;&nbsp; const authMsg = document.getElementById('authMsg');<br>
+&nbsp;&nbsp;&nbsp; const welcome = document.getElementById('welcome');<br>
+&nbsp;&nbsp;&nbsp; const signOutBtn = document.getElementById('signOutBtn');<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1581;&#1575;&#1604;&#1577; &#1605;&#1581;&#1604;&#1610;&#1577; &#1601;&#1610; &#1575;&#1604;&#1608;&#1575;&#1580;&#1607;&#1577;<br>
+&nbsp;&nbsp;&nbsp; let balances = {"SDG":0,"QAR":0};<br>
+&nbsp;&nbsp;&nbsp; let transactions = [];<br>
+&nbsp;&nbsp;&nbsp; let clients = {};<br>
+&nbsp;&nbsp;&nbsp; let transactionIdCounter = 1101;<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1593;&#1585;&#1590;/&#1573;&#1582;&#1601;&#1575;&#1569; &#1575;&#1604;&#1605;&#1608;&#1583;&#1575;&#1604;<br>
+&nbsp;&nbsp;&nbsp; function showModal(){ authModal.style.display='flex'; document.body.classList.add('modal-active'); }<br>
+&nbsp;&nbsp;&nbsp; function hideModal(){ authModal.style.display='none'; document.body.classList.remove('modal-active'); }<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1585;&#1587;&#1575;&#1574;&#1604;<br>
+&nbsp;&nbsp;&nbsp; function setAuthMsg(m){ authMsg.textContent = m; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1573;&#1606;&#1588;&#1575;&#1569; &#1605;&#1587;&#1578;&#1606;&#1583; &#1605;&#1587;&#1578;&#1582;&#1583;&#1605; &#1580;&#1583;&#1610;&#1583; &#1601;&#1610; Firestore &#1576;&#1575;&#1604;&#1607;&#1610;&#1603;&#1604; &#1575;&#1604;&#1575;&#1601;&#1578;&#1585;&#1575;&#1590;&#1610;<br>
+&nbsp;&nbsp;&nbsp; async function createUserDocIfNotExists(uid, email) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const ref = db.collection('users').doc(uid);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const doc = await ref.get();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!doc.exists) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; await ref.set({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email: email || null,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; balances: balances,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transactions: transactions,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; clients: clients,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transactionIdCounter: transactionIdCounter,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; createdAt: firebase.firestore.FieldValue.serverTimestamp()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1581;&#1601;&#1592; &#1575;&#1604;&#1581;&#1575;&#1604;&#1577; &#1575;&#1604;&#1581;&#1575;&#1604;&#1610;&#1577; &#1573;&#1604;&#1609; Firestore (&#1604;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; &#1575;&#1604;&#1581;&#1575;&#1604;&#1610;)<br>
+&nbsp;&nbsp;&nbsp; async function saveDataToFirestore() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const user = auth.currentUser;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!user) return;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const ref = db.collection('users').doc(user.uid);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; await ref.set({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; balances,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transactions,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; clients,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transactionIdCounter,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; updatedAt: firebase.firestore.FieldValue.serverTimestamp()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, { merge: true });<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.error('&#1582;&#1591;&#1571; &#1601;&#1610; &#1575;&#1604;&#1581;&#1601;&#1592; &#1573;&#1604;&#1609; Firestore:', e);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1578;&#1581;&#1605;&#1610;&#1604; &#1576;&#1610;&#1575;&#1606;&#1575;&#1578; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; &#1605;&#1606; Firestore<br>
+&nbsp;&nbsp;&nbsp; async function loadDataFromFirestore(uid) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const doc = await db.collection('users').doc(uid).get();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!doc.exists) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &#1575;&#1581;&#1578;&#1610;&#1575;&#1591;&#1610;: &#1573;&#1606;&#1588;&#1575;&#1569; &#1605;&#1587;&#1578;&#1606;&#1583; &#1580;&#1583;&#1610;&#1583;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; await createUserDocIfNotExists(uid, auth.currentUser?.email);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const data = doc.data() || {};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; balances = data.balances || {"SDG":0,"QAR":0};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transactions = data.transactions || [];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; clients = data.clients || {};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transactionIdCounter = data.transactionIdCounter || 1101;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; renderUI();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.error('&#1582;&#1591;&#1571; &#1578;&#1581;&#1605;&#1610;&#1604; &#1575;&#1604;&#1576;&#1610;&#1575;&#1606;&#1575;&#1578;:', e);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1593;&#1585;&#1590; &#1575;&#1604;&#1571;&#1585;&#1589;&#1583;&#1577; &#1608;&#1575;&#1604;&#1605;&#1593;&#1575;&#1605;&#1604;&#1575;&#1578; &#1601;&#1610; &#1575;&#1604;&#1608;&#1575;&#1580;&#1607;&#1577;<br>
+&nbsp;&nbsp;&nbsp; function renderUI() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &#1571;&#1585;&#1589;&#1583;&#1577;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const c = document.getElementById('balancesContainer');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.innerHTML = '';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (const [k,v] of Object.entries(balances)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const div = document.createElement('div');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; div.className = 'balance-item';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; div.innerHTML = `&lt;strong&gt;${k}&lt;/strong&gt;&lt;div class="muted" style="margin-top:6px"&gt;${v}&lt;/div&gt;`;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c.appendChild(div);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &#1605;&#1593;&#1575;&#1605;&#1604;&#1575;&#1578;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const txc = document.getElementById('txContainer');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!transactions.length) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; txc.innerHTML = '&lt;div class="muted"&gt;&#1604;&#1575; &#1578;&#1608;&#1580;&#1583; &#1605;&#1593;&#1575;&#1605;&#1604;&#1575;&#1578; &#1576;&#1593;&#1583;&lt;/div&gt;';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let html = '&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&#1575;&#1604;&#1578;&#1575;&#1585;&#1610;&#1582;&lt;/th&gt;&lt;th&gt;&#1575;&#1604;&#1581;&#1583;&#1579;&lt;/th&gt;&lt;th&gt;&#1575;&#1604;&#1605;&#1576;&#1604;&#1594;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const last = transactions.slice(-10).reverse();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (const t of last) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; html += `&lt;tr&gt;&lt;td class="muted"&gt;${t.date||''}&lt;/td&gt;&lt;td&gt;${t.desc||t.type||''}&lt;/td&gt;&lt;td&gt;${t.amount||''}&lt;/td&gt;&lt;/tr&gt;`;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; html += '&lt;/tbody&gt;&lt;/table&gt;';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; txc.innerHTML = html;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1578;&#1587;&#1580;&#1610;&#1604; &#1580;&#1583;&#1610;&#1583; (email/password)<br>
+&nbsp;&nbsp;&nbsp; signUpBtn.addEventListener('click', async () =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const email = emailInput.value.trim();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const pass = passInput.value;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!email || !pass) { setAuthMsg('&#1571;&#1583;&#1582;&#1604; &#1575;&#1604;&#1576;&#1585;&#1610;&#1583; &#1608;&#1603;&#1604;&#1605;&#1577; &#1575;&#1604;&#1605;&#1585;&#1608;&#1585;'); return; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setAuthMsg('&#1580;&#1575;&#1585;&#1610; &#1573;&#1606;&#1588;&#1575;&#1569; &#1575;&#1604;&#1581;&#1587;&#1575;&#1576;...');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const res = await auth.createUserWithEmailAndPassword(email, pass);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; await createUserDocIfNotExists(res.user.uid, email);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setAuthMsg('&#1578;&#1605; &#1573;&#1606;&#1588;&#1575;&#1569; &#1575;&#1604;&#1581;&#1587;&#1575;&#1576; &#1608;&#1578;&#1587;&#1580;&#1610;&#1604; &#1575;&#1604;&#1583;&#1582;&#1608;&#1604;');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setAuthMsg(e.message || '&#1601;&#1588;&#1604; &#1575;&#1604;&#1578;&#1587;&#1580;&#1610;&#1604;');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; });<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1578;&#1587;&#1580;&#1610;&#1604; &#1583;&#1582;&#1608;&#1604; (email/password)<br>
+&nbsp;&nbsp;&nbsp; signInBtn.addEventListener('click', async () =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const email = emailInput.value.trim();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const pass = passInput.value;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!email || !pass) { setAuthMsg('&#1571;&#1583;&#1582;&#1604; &#1575;&#1604;&#1576;&#1585;&#1610;&#1583; &#1608;&#1603;&#1604;&#1605;&#1577; &#1575;&#1604;&#1605;&#1585;&#1608;&#1585;'); return; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setAuthMsg('&#1580;&#1575;&#1585;&#1610; &#1578;&#1587;&#1580;&#1610;&#1604; &#1575;&#1604;&#1583;&#1582;&#1608;&#1604;...');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; await auth.signInWithEmailAndPassword(email, pass);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setAuthMsg('&#1578;&#1605; &#1578;&#1587;&#1580;&#1610;&#1604; &#1575;&#1604;&#1583;&#1582;&#1608;&#1604;');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setAuthMsg(e.message || '&#1601;&#1588;&#1604; &#1575;&#1604;&#1583;&#1582;&#1608;&#1604;');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; });<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1578;&#1587;&#1580;&#1610;&#1604; &#1583;&#1582;&#1608;&#1604; &#1593;&#1576;&#1585; Google<br>
+&nbsp;&nbsp;&nbsp; googleBtn.addEventListener('click', async () =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const provider = new firebase.auth.GoogleAuthProvider();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const res = await auth.signInWithPopup(provider);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &#1578;&#1606;&#1588;&#1574;&#1577; &#1605;&#1587;&#1578;&#1606;&#1583; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; &#1573;&#1606; &#1604;&#1605; &#1610;&#1603;&#1606; &#1605;&#1608;&#1580;&#1608;&#1583;&#1611;&#1575;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; await createUserDocIfNotExists(res.user.uid, res.user.email);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (e) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.error(e);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setAuthMsg('&#1601;&#1588;&#1604; &#1575;&#1604;&#1583;&#1582;&#1608;&#1604; &#1593;&#1576;&#1585; Google');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; });<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1582;&#1585;&#1608;&#1580;<br>
+&nbsp;&nbsp;&nbsp; signOutBtn.addEventListener('click', () =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; auth.signOut();<br>
+&nbsp;&nbsp;&nbsp; });<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1605;&#1585;&#1575;&#1602;&#1576;&#1577; &#1581;&#1575;&#1604;&#1577; &#1575;&#1604;&#1605;&#1589;&#1575;&#1583;&#1602;&#1577;<br>
+&nbsp;&nbsp;&nbsp; auth.onAuthStateChanged(async user =&gt; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (user) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &#1605;&#1587;&#1578;&#1582;&#1583;&#1605; &#1605;&#1578;&#1589;&#1604;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; welcome.textContent = `&#1605;&#1585;&#1581;&#1576;&#1575;&#1611;&#1548; ${user.email || '&#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;'}`;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; signOutBtn.classList.remove('hidden');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hideModal();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &#1581;&#1605;&#1604; &#1576;&#1610;&#1575;&#1606;&#1575;&#1578; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; &#1605;&#1606; Firestore<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; await loadDataFromFirestore(user.uid);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &#1594;&#1610;&#1585; &#1605;&#1578;&#1589;&#1604;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; welcome.textContent = '&#1594;&#1610;&#1585; &#1605;&#1578;&#1589;&#1604;';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; signOutBtn.classList.add('hidden');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &#1571;&#1593;&#1583; &#1575;&#1604;&#1581;&#1575;&#1604;&#1577; &#1575;&#1604;&#1575;&#1601;&#1578;&#1585;&#1575;&#1590;&#1610;&#1577;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; balances = {"SDG":0,"QAR":0};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transactions = [];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; clients = {};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transactionIdCounter = 1101;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; renderUI();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; showModal();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; });<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1605;&#1579;&#1575;&#1604;: &#1583;&#1575;&#1604;&#1577; &#1604;&#1573;&#1590;&#1575;&#1601;&#1577; &#1593;&#1605;&#1604;&#1610;&#1577; &#1580;&#1583;&#1610;&#1583;&#1577; &#1608;&#1581;&#1601;&#1592;&#1607;&#1575;<br>
+&nbsp;&nbsp;&nbsp; async function addTransaction(desc, amount, currency='SDG') {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const tx = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; id: String(transactionIdCounter++).padStart(6,'0'),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; desc,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; amount,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; currency,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; date: new Date().toLocaleString('ar-EG')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; };<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; transactions.push(tx);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &#1578;&#1581;&#1583;&#1610;&#1579; &#1585;&#1589;&#1610;&#1583; &#1575;&#1601;&#1578;&#1585;&#1575;&#1590;&#1610; &#1576;&#1587;&#1610;&#1591; (&#1604;&#1604;&#1605;&#1579;&#1575;&#1604;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; balances[currency] = (balances[currency]||0) + Number(amount || 0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; renderUI();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; await saveDataToFirestore();<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1605;&#1579;&#1575;&#1604; &#1589;&#1594;&#1610;&#1585;: &#1573;&#1590;&#1575;&#1601;&#1577; &#1605;&#1593;&#1575;&#1605;&#1604;&#1577; &#1578;&#1580;&#1585;&#1610;&#1576;&#1610;&#1577; &#1576;&#1593;&#1583; &#1578;&#1587;&#1580;&#1610;&#1604; &#1575;&#1604;&#1583;&#1582;&#1608;&#1604; (&#1604;&#1604;&#1575;&#1582;&#1578;&#1576;&#1575;&#1585; &#1601;&#1602;&#1591;)<br>
+&nbsp;&nbsp;&nbsp; // &#1604;&#1575;&#1581;&#1602;&#1611;&#1575; &#1610;&#1605;&#1603;&#1606;&#1603; &#1575;&#1587;&#1578;&#1583;&#1593;&#1575;&#1569; addTransaction &#1605;&#1606; &#1608;&#1575;&#1580;&#1607;&#1577; &#1575;&#1604;&#1578;&#1591;&#1576;&#1610;&#1602; &#1575;&#1604;&#1581;&#1602;&#1610;&#1602;&#1610;&#1577;<br>
+&nbsp;&nbsp;&nbsp; // setTimeout(()=&gt; addTransaction('&#1605;&#1593;&#1575;&#1605;&#1604;&#1577; &#1578;&#1580;&#1585;&#1610;&#1576;&#1610;&#1577;', 100), 2000);<br>
+<br>
+&nbsp;&nbsp;&nbsp; // &#1605;&#1606;&#1593; &#1575;&#1604;&#1578;&#1601;&#1575;&#1593;&#1604; &#1576;&#1575;&#1604;&#1582;&#1604;&#1601;&#1610;&#1577; &#1593;&#1606;&#1583; &#1575;&#1604;&#1578;&#1581;&#1605;&#1610;&#1604; &#1573;&#1584;&#1575; &#1603;&#1575;&#1606; &#1575;&#1604;&#1605;&#1608;&#1583;&#1575;&#1604; &#1592;&#1575;&#1607;&#1585;<br>
+&nbsp;&nbsp;&nbsp; // &#1606;&#1593;&#1585;&#1590; &#1575;&#1604;&#1605;&#1608;&#1583;&#1575;&#1604; &#1605;&#1576;&#1583;&#1574;&#1610;&#1611;&#1575;&#1563; auth.onAuthStateChanged &#1587;&#1610;&#1582;&#1601;&#1610;&#1607; &#1573;&#1584;&#1575; &#1603;&#1575;&#1606; &#1605;&#1578;&#1589;&#1604;&#1611;&#1575;<br>
+&nbsp;&nbsp;&nbsp; showModal();<br>
+<br>
+&nbsp; &lt;/script&gt;<br>
+&lt;/body&gt;<br>
+&lt;/html&gt;</div>
+</body>
+</html>
